@@ -49,7 +49,14 @@ def computeLinearRegressionModel(XTrain, yTrain, XTest, yTest):
     regressor = LinearRegression()
     regressor.fit(XTrain, yTrain)
     yPred = regressor.predict(XTest)
-    print(str(yTest) + "\n" + str(yPred))
+    #gerar grafico
+    import matplotlib.pyplot as plt 
+    plt.scatter(XTest[:, -1], yTest, color="red")
+    plt.plot(XTest[:, -1], yPred, color="blue")
+    plt.title("Incritos X Visualizações (SVBR)")
+    plt.xlabel("Total inscritos")
+    plt.ylabel("Total visualizações")
+    plt.show()
     
 def runLinearRegressionExample(filename): 
     X, Y = loadDataset(filename=filename)
