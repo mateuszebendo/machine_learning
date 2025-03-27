@@ -1,4 +1,4 @@
-import numpy as np 
+import numpy as np
 import pandas as pd 
 
 def loadDataset(filename):
@@ -13,12 +13,8 @@ def fillMissingData(X):
     from sklearn.impute import SimpleImputer 
     #instancia um simpleImputer, indica que os valores faltantes serao NaN e usa media como estrategia para calcula-los
     imputer = SimpleImputer(missing_values=np.nan, strategy='median')
-    #aplica o fit_transform em todas linhas e todas as colunas de X a partir da primeira coluna
-    #fit: calcula os parametros do transformador (por exemplo, a media e o desvio padrao no caso do StandardScaler) com base no conjunto de dados fornecido 
-    #transform: usa esses parametros para transformar os dados (normalizando, escalonando, etc)
-    #obs: transform usa os parametros que ja foram usados no fit
-    X[:, 1:] = imputer.fit_transform(X[:, 1:])
-    return X
+    #aplica o fit_transform em todas linhas e todas as colunas de X
+    return imputer.fit_transform(X)
 
 def computeCategorization(X):
     from sklearn.preprocessing import LabelEncoder
@@ -28,14 +24,13 @@ def computeCategorization(X):
     
     #one hot enconding (transformar variaveis categoricas em valores binarios para nao interferir nos calculos do modelo)
     D = pd.get_dummies(X[:, 0])
-    X = X[:, 1:]
-    X = np.insert(X, 0, D.values, axis=1)
+    X = np.hstack((D.values, X[:, 1:]))
     return X
 
 def splitTrainTest(X, Y, testSize): 
     from sklearn.model_selection import train_test_split
     #cria tabelas de treino e teste
-    XTrain, XTest, yTrain, yTest = train_test_split(X, Y, test_size=testSize)
+    XTrain, XTest, yTrain, yTest = train_test_split(X, Y, test_size=testSize, random_state=42)
     return XTrain, XTest, yTrain, yTest
 
 def computeScaling(train, test):
@@ -58,7 +53,7 @@ def computeLinearRegressionModel(XTrain, yTrain, XTest, yTest):
     
 def runLinearRegressionExample(filename): 
     X, Y = loadDataset(filename=filename)
-    X = fillMissingData(X)
+    X[:, 1:] = fillMissingData(X[:, 1:])
     Y = Y.reshape(-1, 1)
     Y = fillMissingData(Y)
     Y = Y.ravel()   
@@ -66,6 +61,5 @@ def runLinearRegressionExample(filename):
     XTrain, XTest, yTrain, yTest = splitTrainTest(X, Y, 0.2)
     computeLinearRegressionModel(XTrain, yTrain, XTest, yTest)
     
-
 if __name__ == "__main__": 
     runLinearRegressionExample(filename="../data/svbr.csv")
