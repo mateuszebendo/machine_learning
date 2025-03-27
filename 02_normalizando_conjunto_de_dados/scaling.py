@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd 
 
 print("Carrengo a base de dados...")
-baseDeDados = pd.read_csv("admission.csv", delimiter=";")
+baseDeDados = pd.read_csv("../data/admission.csv", delimiter=";")
 X = baseDeDados.iloc[:, :-1].values
 Y = baseDeDados.iloc[:, -1].values 
 

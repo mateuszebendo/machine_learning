@@ -1,7 +1,7 @@
 import numpy as np 
 import pandas as pd
  
-baseDeDados = pd.read_csv('svbr.csv', delimiter=';')
+baseDeDados = pd.read_csv('../data/svbr.csv', delimiter=';')
 X = baseDeDados.iloc[:, :].values
 
 from sklearn.impute import SimpleImputer 
