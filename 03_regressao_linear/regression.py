@@ -1,6 +1,12 @@
 import numpy as np
 import pandas as pd 
 
+#important!
+#diferença fit, transform e fit_transform 
+#fit: usado para aprender/treinar um modelo ou um transformador baseado nos dados de entrada. ele calcula parametros internos necessarios para a transformacao ou a modelagem 
+#transform: aplica a transformacao dos dados usando os parametros aprendidos pelo fit()
+#fit_transform: combina o fit e o transform na mesma etapa (OBS: uma classe usara os parametros calculados nesse fit para seus proximos metodos que o acharem relevante)
+
 def loadDataset(filename):
     baseDeDados = pd.read_csv(filename, delimiter=";")
     #carrega todas as linhas, todas as colunas menos a ultima
