@@ -19,6 +19,7 @@ X[:, 0] = label_enconder_X.fit_transform(X[:, 0])
 
 
 #one hot enconding - transforma variaveis categoricas em valores binarios
+#para cada linha da coluna nao numerica, eh criada uma coluna 
 D = pd.get_dummies(X[:, 0])
 X = X[:, 1:]
 X = np.insert(X, 0, D.values, axis=1)
